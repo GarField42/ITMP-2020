@@ -8,23 +8,45 @@
 </head>
 <body class="paper">
 	<div id="app">
-		<input type="number" v-model="n">
+		<h3>ตัวตั้งสูตรคูณ <input type="number" v-model="n">
+		จำนวนแถว <input type="number" v-model="row"></h3>
 		<div class="space"></div>
-		<h2>สูตรคูณแม่ {{n}}</h2>
-		<h3
-		v-for="i in 12"
+		<h1>สูตรคูณแม่ {{n}}</h1>
+		<h5>แม่ก่อนหน้า => แม่ {{before_n}}</h5>
+		<h3 class="table" 
+		v-for="i in r"
 		>{{n}} x {{i}} = {{x(i)}}</h3>
+		<h2>ผลรวมทั้งหมด = {{sum}}</h2>
 	</div>
 
 	<script>
 		let app = new Vue({
 			el: '#app',
 			data: {
-				n: 2
+				n: 2,
+				before_n: 1,
+				row: 12
 			},
 			methods:{
 				x: function(row){
 					return this.n*row
+				}
+			},
+			computed: {
+				r: function(){
+					return parseInt(this.row)
+				},
+				sum: function() {
+					let sum = 0
+					for (let i = 1; i <= this.row; i++) {
+							sum += (this.x(i))
+						}
+					return sum
+					}
+			},
+			watch: {
+				n: function(a,b){
+					this.before_n = b
 				}
 			}
 		})
