@@ -1,0 +1,13 @@
+h2:hover{
+    background-color: gray;
+    transition: 0.7s;
+}
+#user{
+    margin-left: 50vw;
+    width: 300px;
+}
+
+#data{
+    margin-left: 5%;
+    float: left;
+}
