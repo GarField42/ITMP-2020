@@ -28,7 +28,11 @@
 		</section>
 		<section id="canvas_footer">
 			<div>
-				{{score}} คะแนน
+				คะแนน {{score}}
+				<br>
+				คะแนนสูงสุด {{highscore}}
+				<br>
+				เลเวล {{level}}
 			</div>
 		</section>
 	</div>
@@ -49,12 +53,13 @@
 				h:300, // hue ในรอบนี้
 				time:30, //เวลาเริ่มต้น
 				score:0, //คะแนนเริ่มต้น
+				highscore:0,//คะแนนสูงสุด
 				pick:2, //หมายเลขวงกลมที่จะสีแตกต่างจากก้อนอื่นๆ
 				l:50,//ความสว่างของสีทั่วไปในรอบนี้
 				combo:0,//นับจำนวนที่กดถูกต่อเนื่อง
 				level:1,//ระดับความยาก
-				maxrow:6,//จำนวนrowที่มากที่สุด
-				minrow:2,//จำนวนrowที่น้อยที่สุด
+				maxrow:3,//จำนวนrowที่มากที่สุด
+				minrow:1,//จำนวนrowที่น้อยที่สุด
 			},
 			methods: {
 				check: function(e){
@@ -68,21 +73,27 @@
 				},
 				correct: function(){
 					//เข้าด่านต่อไป
-					this.row = rand(this.minrow,this.maxrow)
+					this.row = rand(this.minrow+this.level,this.maxrow+this.level)
 					this.pick = rand(1,this.row*this.row)
 					app.score++
 					app.combo++
+					if(app.highscore<app.score){
+						app.highscore=app.score
+					}
 					if (app.combo==5) {
-						app.time+=3
+						app.time+=2
 						app.combo=0
+					}
+					if (app.highscore%5==0 && app.highscore>0) {
+						app.level++
 					}
 					console.log('Correct!')
 				},
 				incorrect: function(){
 					//เข้าด่านต่อไป
 					this.pick = rand(1,this.row*this.row)
-					app.score--
 					app.combo=0
+					app.time--
 					console.log('Incorrect!')
 				}
 			}
