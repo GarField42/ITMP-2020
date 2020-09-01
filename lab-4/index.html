@@ -30,8 +30,6 @@
 			<div>
 				คะแนน {{score}}
 				<br>
-				คะแนนสูงสุด {{highscore}}
-				<br>
 				เลเวล {{level}}
 			</div>
 		</section>
@@ -39,7 +37,7 @@
 
 	<script>
 		let picklight = "20%" //เลือกว่ารอบนี้ อันพิเศษจะมีความสว่าง 20%
-		document.registerElement('a-dot') //ให้ vue รู้จัก a-dot
+		//document.registerElement('a-dot') //ให้ vue รู้จัก a-dot
 
 		function rand(start,stop){//สร้างฟังก์ชัน random ไว้ใช้
 			let shift = (stop-start)+1
@@ -53,7 +51,6 @@
 				h:300, // hue ในรอบนี้
 				time:30, //เวลาเริ่มต้น
 				score:0, //คะแนนเริ่มต้น
-				highscore:0,//คะแนนสูงสุด
 				pick:2, //หมายเลขวงกลมที่จะสีแตกต่างจากก้อนอื่นๆ
 				l:50,//ความสว่างของสีทั่วไปในรอบนี้
 				combo:0,//นับจำนวนที่กดถูกต่อเนื่อง
@@ -63,37 +60,36 @@
 			},
 			methods: {
 				check: function(e){
-					if (e==true) {
-						app.correct()
-					}else{
-						app.incorrect()
+					if (this.time>0) {
+						if (e==true ) {
+							this.correct()
+						}else{
+							this.incorrect()
+						}
+						console.log(e)
+						/ทำให้เช็คก่อนว่าถูกมั้ย
 					}
-					console.log(e)
-					//ทำให้เช็คก่อนว่าถูกมั้ย
 				},
 				correct: function(){
 					//เข้าด่านต่อไป
 					this.row = rand(this.minrow+this.level,this.maxrow+this.level)
 					this.pick = rand(1,this.row*this.row)
-					app.score++
-					app.combo++
-					if(app.highscore<app.score){
-						app.highscore=app.score
+					this.score++
+					this.combo++
+					if (this.combo==5) {
+						this.time+=2
+						this.combo=0
 					}
-					if (app.combo==5) {
-						app.time+=2
-						app.combo=0
-					}
-					if (app.highscore%5==0 && app.highscore>0) {
-						app.level++
+					if (this.score%5==0 && this.score>0) {
+						this.level++
 					}
 					console.log('Correct!')
 				},
 				incorrect: function(){
 					//เข้าด่านต่อไป
 					this.pick = rand(1,this.row*this.row)
-					app.combo=0
-					app.time--
+					this.combo=0
+					this.time--
 					console.log('Incorrect!')
 				}
 			}
