@@ -36,7 +36,7 @@
 	</div>
 
 	<script>
-		let picklight = "20%" //เลือกว่ารอบนี้ อันพิเศษจะมีความสว่าง 20%
+		let picklight = "30%" //เลือกว่ารอบนี้ อันพิเศษจะมีความสว่าง 20%
 		//document.registerElement('a-dot') //ให้ vue รู้จัก a-dot
 
 		function rand(start,stop){//สร้างฟังก์ชัน random ไว้ใช้
@@ -74,6 +74,7 @@
 					//เข้าด่านต่อไป
 					this.row = rand(this.minrow+this.level,this.maxrow+this.level)
 					this.pick = rand(1,this.row*this.row)
+					this.h = rand(100,330)
 					this.score++
 					this.combo++
 					if (this.combo==5) {
