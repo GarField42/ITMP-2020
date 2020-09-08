@@ -65,23 +65,25 @@ div.box{
 #endgame{
 	background-color: #333;
 }
-.box._toggle{
+.box._toggle[data-isrightarrow="1"]{
 	background-image: url('yellow.png');
 	background-size: 100%;
 	transition: none;
 }
 .box._toggle[data-isrightarrow="0"]{
+	background-image: url('red.png');
 	background-size: 100%;
 	transition: none;
-	background-image: url('red.png');
 }
 
 
 .box._12{
-	background-color: red;
+	background-image: url('apple_basket.png');
+	background-size: 100%;
 }
 .box._14{
-	background-color: yellow;
+	background-image: url('banana_basket.png');
+	background-size: 100%;
 }
 .box._path{
 	background-color: black;
@@ -96,14 +98,15 @@ div.box{
 .box._path[data-pst="11"]{
 	transform: rotate(90deg);
 }
-.box._fruit{
-	background-color: yellow;
-	border-radius: 100%;
-	border: 3px solid #fffc;
+.box._fruit[data-type="13"]{
+	background-image: url('banana.png');
+	background-size: 100%;
 	transform: scale(.6);
 }
 .box._fruit[data-type="11"]{
-	background-color: red;
+	background-image: url('apple.png');
+	background-size: 100%;
+	transform: scale(.6);
 }
 
 .box[data-pst="0"]{
@@ -167,5 +170,6 @@ div.box{
 	bottom:40%;
 }
 .box._origin{
-	background-color: black;
+	background-image: url('start.png');
+	background-size: 100%;
 }
