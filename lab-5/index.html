@@ -10,7 +10,7 @@
 	<div id="canvas">
 		<section id="canvas_header">
 			<div>
-			{{score}} คะแนน
+			score:{{score}}     speed:{{speed}} {{turn}}
 			</div>
 		</section>
 		<section id="canvas_main" 
@@ -44,15 +44,14 @@
 			let shift = (stop-start)+1
 			return Math.floor(Math.random()*100%shift)+start
 		}
-		
+
 		let newfruitId = 3
 		let isRightArrow = 1
-		let speed = 1000
 		let app = new Vue({
 			el:'#canvas',
 			data:{
 				isRightArrow: isRightArrow,
-				speed: speed,
+				speed: 1000,
 				play:true,
 				turn:0,
 				score:0,
@@ -123,18 +122,30 @@
 						}
 						newfruitId++;
 					}
+
+					//diffult
+					if (app.turn>15) {
+						app.speed = 800
+					}
+					if (app.turn>30) {
+						app.speed = 600
+					}
+					if (app.turn>60) {
+						app.speed = 400
+					}
+					if (app.turn>100) {
+						app.speed = 200
+					}
 				}
 			},
 		})
 
-		let playing  =setInterval(function(){
-			if(app.play){
+		setTimeout(function timespeed(){
+			if (app.play) {
 				app.turn++
+				setTimeout(timespeed, app.speed)
 			}
-			else{
-				clearInterval(playing)
-			}
-		},speed)
+		},app.speed)
 	</script>
 </body>
 </html>
