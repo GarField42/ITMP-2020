@@ -75,8 +75,8 @@
 			},
 			watch:{
 				turn: function(){
-					let count = this.fruits.length
 					for(let f in this.fruits){
+						//toggle
 						if (this.fruits[f].pst == 10) {
 							if (this.isRightArrow == 1) {
 								this.fruits[f].step = 3
@@ -87,9 +87,17 @@
 							this.fruits[f].step = 1
 						}
 
-						//add score
-						if (this.fruits[f].pst == this.fruits[f].type && this.fruits[f].run) {
-							this.score++;
+						//check
+						if(this.fruits[f].pst == 11 || this.fruits[f].pst == 13){
+							//correct -> add score
+							if (this.fruits[f].pst == this.fruits[f].type && this.fruits[f].run) {
+								this.score++;
+							}
+
+							//worng -> endgame
+							else if(this.fruits[f].pst != this.fruits[f].type && this.fruits[f].run){
+								this.play = false;
+							}
 						}
 
 						//stop run
@@ -97,11 +105,14 @@
 							this.fruits[f].run = false;
 						}
 
+						//run
 						let run = this.fruits[f].run
 						if(run){
 							this.fruits[f].pst = this.fruits[f].pst+this.fruits[f].step
 						}
 					}
+
+					//spawn
 					let spawn = rand(0,1)
 					if(spawn == 1){
 						newfruit = rand(0,1)
@@ -117,7 +128,12 @@
 		})
 
 		let playing  =setInterval(function(){
-			app.turn++
+			if(app.play){
+				app.turn++
+			}
+			else{
+				clearInterval(playing)
+			}
 		},speed)
 	</script>
 </body>
